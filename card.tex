@@ -1,0 +1,89 @@
+%\documentclass{article}%
+\documentclass[8pt]{article}
+
+\usepackage[T1]{fontenc}%
+\usepackage[utf8]{inputenc}%
+\usepackage{lmodern}%
+\usepackage{textcomp}%
+\usepackage{lastpage}%
+\usepackage{graphicx} 
+\usepackage{multicol}
+\usepackage{sectsty}
+
+
+\usepackage[top=0cm, bottom=1cm, left=1cm, right=1cm, columnsep=10pt]{geometry}
+\sectionfont{\fontsize{10}{8}\selectfont}
+\subsectionfont{\fontsize{8}{6}\selectfont}
+
+\title{Model Card - Credit Card Approval Prediction}
+
+\date{\vspace{-10ex}}
+%\date{}  % Toggle commenting to test
+
+%\date{\today}%
+
+\begin{document}
+
+\fontsize{40}{48}
+\twocolumn
+
+\normalsize%
+\maketitle%
+\section*{Model details}
+\subsection*{Overview}
+Ce modèle a pour but de classifier à l'aide du Support Vector Machine(SVM) si un candidats emprunteur pourait devenir defaillant en se basant sur certaines donné des candidats, comme le sexe, l'age, l'emplois et autes. Le model est entrainé sur le set Kaggle "Credit Card Approval Prediction". L'ensemble de donné semble être trop simplifié pour produire un modèle réaliste. Nous verrons, les limitation, les cas d'utilisation et les métriques du modèle.
+
+\begin{itemize}
+  \item Version: Support Vector Machine (SVM), v1
+  \item Owners: Eugene Sanscartier, 
+  \item Contact: eugene.sanscartier@umontreal.ca
+  \item License: No licence
+  \item References: kaggle.com/
+
+rikdifos/credit-card-approval-prediction
+  \item Citation: github.com
+\end{itemize}
+
+
+\section*{Considerations}
+\subsection*{Use Cases}
+Ce modèle permettrais de déterminer si un candidats est à risque  de devenir defaillant
+
+\subsection*{Intended Users}
+Ce modèle pourrait être utiliser par des banques ou des entreprises de prêt.
+
+\subsection*{Limitations}
+Les étiquettes définissant une bon et mauvais payeur ne sont pas donné par l'ensemble de donné. Elles sont donc construite selon la proportion de chaque catégorie dans l'historique de l'ensemble d'entrainement. Ce qui ne donne pas une vision globle de ce qu'est un bon payeur.
+
+\subsection*{Ethical Considerations}
+
+Risque: Les donnés du modèle ne prend pas en considération l'historique des variations économiques, ni ne donne de raison de refus, ni ne considère dans la construction des étiquettes la repentance
+
+Mitigation Strategy: Des nouvelles informations pourrait être ajouté au modèle, le modèle pourait être couplé à une autre pour plus de transparence, enfin un travail plus poussé sur l'étiquetage pourrait être fait.
+
+\section*{Train Set and Eval Set}
+Cette section montre la distribution des hommes et des femme ainsi que leur étiquette. Cela est fait afin de montrer la représentation de chaque groupe, de leur imbalance et de leur étiquetage.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\linewidth]{valid_size.pdf}
+\end{figure}
+
+\section*{Quantitative Analysis}
+Les graphiques ci-dessous donne la performances du modèle en fonction du genre. Les métriques présentés sont  l'“Accuracy”, “False Positive Rate”(FP), and “False Negative Rate”(FN), “False Discovery Rate”(FD), and “False Omission Rate”(FO). Il est anticipé que le modèle puisse moin bien performer selon le genre.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.75\linewidth]{valid_acuracy.pdf}
+\end{figure}
+
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.75\linewidth]{valid_fairness.pdf}
+\end{figure}
+
+aasdasdasdasd
+
+\end{document}

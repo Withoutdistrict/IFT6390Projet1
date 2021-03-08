@@ -1,0 +1,94 @@
+\documentclass{article}%
+\usepackage[T1]{fontenc}%
+\usepackage[utf8]{inputenc}%
+\usepackage{lmodern}%
+\usepackage{textcomp}%
+\usepackage{lastpage}%
+\usepackage{graphicx} 
+\usepackage{amsmath}
+\usepackage{subfig}
+
+
+\usepackage[top=0cm, bottom=1cm, left=2.5cm, right=2.5cm, columnsep=10pt]{geometry}
+%
+\title{Repport}%
+\author{Eugene Sanscartier}%
+\date{\today}%
+%
+\begin{document}%
+
+\normalsize%
+\maketitle%
+\section*{Support-Vector Machine Classification}%
+
+Tel qu'implémenté dans scikit-learn, 
+Le problème consiste à trouver les paramètres $w \in \mathcal{R}^d$ et $b \in \mathcal{R}$ résolvant le problème
+
+\begin{align*}
+    sign \left(w^T \phi(\mathbf{x}) + b \right) = y
+\end{align*}
+Prédisant la bonne classe. Tel qu'à partir d'un ensemble de vecteur d'entainement $ \mathbf{x}_i \in \mathcal{R}^d$ associé aux classes $y_i \in \{-1, 1\}$
+
+Le problème du Support-Vector Machine est un problème dual, composé d'un problème primal et d'un problème dual.\\
+\textbf{Primal:}\\
+On entraine le modèle de sorte à 
+\begin{align*}
+    \text{minimize} \left( \frac{1}{2} w^T w + C \sum_i \xi_i \right)
+\end{align*}
+Assujetis à la contrainte,
+\begin{align*}
+    y_i(w^T \phi(\mathbf{x}_i) + b) \geq 1 - \xi_i, \xi_i \geq 0, \forall i
+\end{align*}
+Le problème consiste à minimiser $w^T w$ sous la pénalité de C.\\
+\textbf{Dual:}\\
+Similairement, on entraine le modèle de sorte à 
+\begin{align*}
+    \text{minimize} \left( \frac{1}{2} g^T Q g - \mathbf{u}^T g \right)
+\end{align*}
+Assujetis à la contrainte,
+\begin{align*}
+    \mathbf{y}^T g = 0, 0 \leq g_i \leq C, \forall i
+\end{align*}
+
+$\mathbf{u}$ est un vecteur d'unité, $Q^{N \times N}$ est défini comme $Q_{ij} = y_i y_j K(\mathbf{x}_i, \mathbf{x}_j)$ où $K(\mathbf{x}_i, \mathbf{x}_j) = \phi (\mathbf{x}_i)^T \phi (\mathbf{x}_j)$ est le kernel. Les $g_i$ sont des coefficients dual contraint pas $C$. \\
+
+Enfin, les prédictions sont faite par 
+\begin{align*}
+    \sum_{i} y_i g_i K(\mathbf{x}_i, \mathbf{x}) + b
+\end{align*}
+
+La représentation dual de ce proplème met en évidence une application des vecteurs d'entrainement vers une dimmention suppérieur.
+
+Ci-dessous, on raporte la complexité temporelle de l'algoritme d'entrainement à la figure  \ref{fig:traning}. Selon \cite{bordes2005fast} l'algoritme est de complexité temporelle $O(N^2 p + N^3)$, $N$ le nombre de donné et $p$ la dimention. On peut cependant dire à l'oeil que cette tendence n'est pas présente sur le graphique.
+
+Aussi, à la figure \ref{fig:kernel} un graphique sur le temps d'éxécution de l'algoritme sur différent kernel. On remarque que le kernel le plus rapide d'éxécution est le kernel "Radial Basis Fonction" (rbf).
+
+On sépare les donnés du modèle en trois ensemble de 60\%, 20\% 20\%, traning, test et validation respectivement. Ensuite, on entraine le modèle sur différent kernel que l'on valide sur l'ensemble de validation, une selection est faites sur le plus perfoment. Enfin, différents paramètres du modèle sont validé et le modèle le plus exacte est gardé en mémoire.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\linewidth]{traning_time.pdf}
+\caption{\label{fig:traning} Temps de d'entrainement en fonction du nombre d'élément dans l'ensemble.}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\linewidth]{kernel_time.pdf}
+\caption{\label{fig:kernel} Temps de d'entrainement en fonction du type de kernel.}
+\end{figure}
+
+\begin{thebibliography}{9}
+
+\bibitem{bordes2005fast}
+  Bordes, Antoine and Ertekin, Seyda and Weston, Jason and Botton, L{\'e}on and Cristianini, Nello,
+  \textit{Fast kernel classifiers with online and active learning},
+  Journal of Machine Learning Research, Massachusetts,
+  6, 9,
+  2005.
+
+\end{thebibliography}
+
+%
+\end{document}
+
+
